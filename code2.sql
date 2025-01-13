@@ -8,10 +8,8 @@ SELECT * FROM members;
 SELECT * FROM return_status;
 
 /*
-Task 13: 
-Identify Members with Overdue Books
-Write a query to identify members who have overdue books (assume a 30-day return period). 
-Display the member's_id, member's name, book title, issue date, and days overdue.
+find members with overdue books (30 day return policy)
+display the member's_id, member's name, book title, issue date, and days overdue.
 */
 
 -- issued_status == members == books == return_status
@@ -47,8 +45,7 @@ ORDER BY 1
 
 -- 
 /*    
-Task 14: Update Book Status on Return
-Write a query to update the status of books in the books table to "Yes" when they are returned (based on entries in the return_status table).
+update the status of books in the books table to "Yes" when they are returned (based on entries in the return_status table).
 */
 
 
@@ -74,7 +71,7 @@ SELECT * FROM return_status
 WHERE issued_id = 'IS130';
 
 
--- Store Procedures
+-- creating a store procedures
 CREATE OR REPLACE PROCEDURE add_return_records(p_return_id VARCHAR(10), p_issued_id VARCHAR(10), p_book_quality VARCHAR(10))
 LANGUAGE plpgsql
 AS $$
@@ -84,8 +81,6 @@ DECLARE
     v_book_name VARCHAR(80);
     
 BEGIN
-    -- all your logic and code
-    -- inserting into returns based on users input
     INSERT INTO return_status(return_id, issued_id, return_date, book_quality)
     VALUES
     (p_return_id, p_issued_id, CURRENT_DATE, p_book_quality);
@@ -111,7 +106,7 @@ $$
 
 
 
--- Testing FUNCTION add_return_records
+-- testing FUNCTION add_return_records
 
 issued_id = IS135
 ISBN = WHERE isbn = '978-0-307-58837-1'
@@ -136,8 +131,8 @@ CALL add_return_records('RS148', 'IS140', 'Good');
 
 
 /*
-Task 15: Branch Performance Report
-Create a query that generates a performance report for each branch, showing the number of books issued, the number of books returned, and the total revenue generated from book rentals.
+Branch Performance Report
+generates a performance report for each branch, showing the number of books issued, the number of books returned, and the total revenue generated from book rentals.
 */
 
 SELECT * FROM branch;
@@ -177,8 +172,8 @@ SELECT * FROM branch_reports;
 
 
 
--- Task 16: CTAS: Create a Table of Active Members
--- Use the CREATE TABLE AS (CTAS) statement to create a new table active_members containing members who have issued at least one book in the last 2 months.
+-- CTAS (create table as statement)
+-- create a new table active_members containing members who have issued at least one book in the last 2 months.
 
 CREATE TABLE active_members
 AS
@@ -195,8 +190,8 @@ WHERE member_id IN (SELECT
 SELECT * FROM active_members;
 
 -- 
--- Task 17: Find Employees with the Most Book Issues Processed
--- Write a query to find the top 3 employees who have processed the most book issues. Display the employee name, number of books processed, and their branch.
+-- find Employees with the Most Book Issues Processed
+-- find the top 3 employees who have processed the most book issues. Display the employee name, number of books processed, and their branch.
 
 SELECT 
     e.emp_name,
@@ -213,11 +208,11 @@ GROUP BY 1, 2
 
 
 /*
-Task 19: Stored Procedure Objective: 
+Stored Procedure Objective: 
 
-Create a stored procedure to manage the status of books in a library system. 
+a stored procedure to manage the status of books in a library system. 
 
-Description: Write a stored procedure that updates the status of a book in the library based on its issuance. 
+Description: a stored procedure that updates the status of a book in the library based on its issuance. 
 
 The procedure should function as follows: 
 
